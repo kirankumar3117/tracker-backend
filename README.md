@@ -12,11 +12,13 @@ This repository contains the backend implementation for a scalable and robust Ha
 ## Requirements
 - Python 3.10+
 - PostgreSQL database
+- Google Cloud Project (for OAuth Client ID)
 
 ## Setup Instructions
 
 1. **Activate Virtual Environment** (If not already active)
 ```bash
+python -m venv venv
 source venv/bin/activate
 ```
 
@@ -25,20 +27,22 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-3. **Configure Database Settings**
-By default, the application connects to PostgreSQL using the following URL string config:
-`postgresql://postgres:postgres@localhost:5432/habittracker`
+3. **Configure Environment Variables**
+Create a `.env` file in the root directory and add:
+```env
+# Database connection string
+DATABASE_URL=postgresql://tracker_user:tracker_password@localhost:5433/tracker_db
 
-Set your environment variables to override the credentials.
-```bash
-export DATABASE_URL="postgresql://user:password@localhost:5432/your_db_name"
-export SECRET_KEY="your-jwt-secret-key"
+# JWT Secret Key (generate a strong one for production)
+SECRET_KEY=your-super-secret-jwt-key
+
+# Google OAuth
+GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
 ```
 
 4. **Initialize Database using Alembic Migrations**
-The Alembic system has already been initialized and configured. To apply the initial structure to your new database, run:
+Apply all migrations to create the database tables (including auth_provider for Google OAuth support):
 ```bash
-alembic revision --autogenerate -m "Initial migration"
 alembic upgrade head
 ```
 
