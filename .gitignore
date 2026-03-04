@@ -1,0 +1,42 @@
+# Environment variables - NEVER commit these
+.env
+.env.*
+!.env.example
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Distribution / packaging
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE / editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+
+# Alembic - keep versions but ignore anything auto-generated that shouldn't be committed
+# (versions directory IS committed intentionally)
