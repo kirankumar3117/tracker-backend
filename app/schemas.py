@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, Field, model_validator, ConfigDict
+from pydantic import BaseModel, EmailStr, Field, model_validator, ConfigDict, field_validator
 from typing import List, Optional
 from datetime import datetime
 from uuid import UUID
@@ -73,6 +73,13 @@ class HabitBase(BaseModel):
     customStartDate: Optional[datetime] = None
     customEndDate: Optional[datetime] = None
 
+    @field_validator('customStartDate', 'customEndDate', mode='before')
+    @classmethod
+    def parse_empty_string_as_none(cls, v):
+        if v == "":
+            return None
+        return v
+
 class HabitCreate(HabitBase):
     @model_validator(mode='after')
     def validate_custom_dates(self):
@@ -88,6 +95,13 @@ class HabitUpdate(BaseModel):
     customStartDate: Optional[datetime] = None
     customEndDate: Optional[datetime] = None
     duration: Optional[str] = None
+
+    @field_validator('customStartDate', 'customEndDate', mode='before')
+    @classmethod
+    def parse_empty_string_as_none(cls, v):
+        if v == "":
+            return None
+        return v
 
 class HabitResponse(HabitBase):
     model_config = ConfigDict(from_attributes=True, populate_by_name=True)
